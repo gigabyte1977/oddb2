@@ -180,7 +180,7 @@ oddbtool.parsePage = function(page, manual) {
 					
 					try {
 						// ID
-						pl[i]['id'] = $(this).find('tr:first-child img').attr('id').replace(/x/, '');
+						pl[i]['id'] = $(this).find('tr:nth-child(1) img').attr('id').replace(/x/, '');
 						
 						// Typ
 						pl[i]['typ'] = $(this).find('tr:first-child > td').css('background-image').replace(/^.*planet(\d+)_s.*$/, '$1');
@@ -191,27 +191,30 @@ oddbtool.parsePage = function(page, manual) {
 					
 					// Name und Werte
 					try {
-						data = $(this).find('tr:first-child a').attr('onmouseover');
+						data = $(this).find('tr:nth-child(1) a').attr('onmouseover');
 						pl[i]['name'] = data.replace(/^.*\'<b>(.*)<\/b>:\'\);setter.*$/, '$1');
 						
 						// kein Genesis -> Werte
-						if(data.indexOf('!&lt;\/b&gt;&lt;\/center&gt;') == -1 && data.indexOf('demateriali') == -1) {
-							data = data.replace(/','.*$/, '');
-							data = data.replace(/http:\/\/[a-zA-Z0-9]*\.*omega/g, '');
-							data = data.split('<br>');
-							
-							pl[i]['erz'] = data[4].replace(/[^\d+]/g, '');
-							pl[i]['wolfram'] = data[5].replace(/[^\d+]/g, '');
-							pl[i]['kristall'] = data[6].replace(/[^\d+]/g, '');
-							pl[i]['fluor'] = data[7].replace(/[^\d+]/g, '');
-							pl[i]['bev'] = data[9].replace(/[^\d+]/g, '');
-							pl[i]['groesse'] = data[11].replace(/[^\d+]/g, '');
-							
-							// Workaround: Unbewohnbare Planis Größe 0
-							if(pl[i]['groesse'] == '' || pl[i]['groesse'] == '0000') {
-								pl[i]['groesse'] = 0;
-							}
-						}
+                        // Wenn FOW dann PlaniTyp = 00 - gibt keine Werte
+                        if (pl[i]['typ']!='00') {
+						    if(data.indexOf('!&lt;\/b&gt;&lt;\/center&gt;') == -1 && data.indexOf('demateriali') == -1) {
+							    data = data.replace(/','.*$/, '');
+							    data = data.replace(/http:\/\/[a-zA-Z0-9]*\.*omega/g, '');
+							    data = data.split('<br>');
+							    
+							    pl[i]['erz'] = data[4].replace(/[^\d+]/g, '');
+							    pl[i]['wolfram'] = data[5].replace(/[^\d+]/g, '');
+							    pl[i]['kristall'] = data[6].replace(/[^\d+]/g, '');
+							    pl[i]['fluor'] = data[7].replace(/[^\d+]/g, '');
+							    pl[i]['bev'] = data[9].replace(/[^\d+]/g, '');
+							    pl[i]['groesse'] = data[11].replace(/[^\d+]/g, '');
+							    
+							    // Workaround: Unbewohnbare Planis Größe 0
+							    if(pl[i]['groesse'] == '' || pl[i]['groesse'] == '0000') {
+								    pl[i]['groesse'] = 0;
+							    }
+						    }
+                        }
 					}
 					catch(e) {
 						throw 'Konnte Planetenwerte nicht ermitteln ('+i+')';
@@ -257,7 +260,7 @@ oddbtool.parsePage = function(page, manual) {
 					
 					try {
 						// ID
-						pl[i]['id'] = $(this).find('tr:first-child img').attr('id').replace(/x/, '');
+						pl[i]['id'] = $(this).find('tr:nth-child(2) img').attr('id').replace(/x/, '');
 						
 						// Typ
 						pl[i]['typ'] = $(this).find('tr:first-child > td').css('background-image').replace(/^.*planet(\d+)_s.*$/, '$1');
@@ -268,7 +271,7 @@ oddbtool.parsePage = function(page, manual) {
 					
 					// Name und Werte
 					try {
-						data = $(this).find('tr:first-child a').attr('onmouseover');
+						data = $(this).find('tr:nth-child(2) a').attr('onmouseover');
 						pl[i]['name'] = data.match(/\'([^\']*):\'\);setter\(/)[1];
 						
 						data = data.replace(/','.*$/, '');
@@ -304,7 +307,7 @@ oddbtool.parsePage = function(page, manual) {
 					
 					// Inhaber
 					p = /setter\(\'(.+)\',[\r\n\s]*\'(\d+)\',\'.*\',\'(.*)\',\'(.*)\'\);/;
-					data = p.exec($(this).find('tr:first-child a').attr('onmouseover'));
+					data = p.exec($(this).find('tr:nth-child(2) a').attr('onmouseover'));
 					if(data == null) throw 'Konnte Inhaber nicht ermitteln! ('+i+')';
 					else {
 						pl[i]['inhaber'] = data[2];
