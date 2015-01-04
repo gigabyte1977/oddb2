@@ -7,7 +7,7 @@ var oddbtool = {
 	/**
 	 * Version
 	 */
-	version: '2.5.0.2',
+	version: '2.5.0.3',
 	odworld: 'int13',
 	
 	
@@ -427,7 +427,7 @@ var oddbtool = {
 		
 		'#oddbtoolheadline{position:absolute; top:85px; left:50%; margin-left:-235px; width:650px; text-align:center;}',
 		
-		'#oddbtoolfowtbl{position:absolute; top:575px; left:50%; margin-left:-300px; width:700px; background-color:rgba(255,255,255,0.15); padding:10px; -moz-border-radius:12px; border-radius:12px; font-family:Arial,Sans; font-size:12px; color:white; z-index:1;}',
+		'#oddbtoolfowtbl{position:absolute; top:850px; left:50%; margin-left:-300px; width:700px; background-color:rgba(255,255,255,0.15); padding:10px; -moz-border-radius:12px; border-radius:12px; font-family:Arial,Sans; font-size:12px; color:white; z-index:1;}',
 		'#oddbtoolfowtbl table{width:100%}',
 		'#oddbtoolfowtbl th, #oddbtoolfowtbl td, #oddbtoolfowtbl a {font-size:9pt;padding:5px}',
 		'#oddbtoolfowtbl th{background-color:rgba(255,255,255,0.1); text-align:left; font-weight:bold;}',
@@ -461,7 +461,12 @@ var oddbtool = {
 		'.oddbtoolrtiroc {background-position:-167px 0px;}',
 		'#oddbtoolkommentar {position:absolute; top:350px; left:400px; background-color:rgba(30,30,30,0.9); padding:8px; font-size:11px; -moz-border-radius:8px; border-radius:8px; text-align:right; display:none; z-index:4;}',
 		'#oddbtoolkommentar iframe {width:160px; height:85px; border:none;}',
-		'#oddbtoolkommentar a {font-size:13px; font-weight:bold; cursor:pointer;}'
+		'#oddbtoolkommentar a {font-size:13px; font-weight:bold; cursor:pointer;}',
+        '/* Temp Anpassungen R13   */',
+        '.oddbtoolplanet {display:none}',
+        '.layout-footer {margin-top:100px;}',
+        '.oddbtoolpfeil {margin-top:50px;}',
+        '.oddbtoolmenu {margin-top:50px;}'
 		].join('');
 		
 		
