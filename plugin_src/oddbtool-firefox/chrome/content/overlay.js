@@ -7,7 +7,7 @@ var oddbtool = {
 	/**
 	 * Version
 	 */
-	version: '2.5.0.3',
+	version: '2.5.0.4',
 	odworld: 'int13',
 	
 	
@@ -464,6 +464,7 @@ var oddbtool = {
 		'#oddbtoolkommentar a {font-size:13px; font-weight:bold; cursor:pointer;}',
         '/* Temp Anpassungen R13   */',
         '.oddbtoolplanet {display:none}',
+        '.oddbtoolorbit {display: block}',
         '.layout-footer {margin-top:100px;}',
         '.oddbtoolpfeil {margin-top:50px;}',
         '.oddbtoolmenu {margin-top:50px;}'

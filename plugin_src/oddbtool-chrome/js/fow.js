@@ -458,7 +458,7 @@ oddbtool.fow = function(page, data) {
 								content += '<div><a href="javascript:void(0)" onclick="document.getElementById(\'oddbtooliframe\').src = \''+oddbtool.prefs.url+'index.php?p=show_planet&amp;sp=orbiter_del&amp;id='+data['pl'][i]['id']+'&amp;ajax&amp;plugin\';this.parentNode.innerHTML = \'<a href=&quot;javascript:void(0)&quot; style=&quot;font-style:italic&quot;>Orbiter gel&ouml;scht</a>\'">Orbiter l&ouml;schen</a></div><div><a href="javascript:void(0)" onclick="document.getElementById(\'oddbtooliframe\').src = \''+oddbtool.prefs.url+'index.php?p=show_planet&amp;sp=ress_del&amp;id='+data['pl'][i]['id']+'&amp;ajax&amp;plugin\';this.parentNode.innerHTML = \'<a href=&quot;javascript:void(0)&quot; style=&quot;font-style:italic&quot;>Ress auf 0 gesetzt</a>\'">Ress auf 0 setzen</a></div>';
 							}
 						}
-						content += '</div><div id="oddbtoolpfeil'+data['pl'][i]['id']+'" class="oddbtoolpfeil" style="top:'+y+'px;left:'+x+'px"></div>';
+						content += '</div><div id="oddbtoolpfeil'+data['pl'][i]['id']+'" class="oddbtoolpfeil" style="top:'+y+'px;left:'+x+'px" onmouseover="dlt(\''+tooltip+'\', \''+data['pl'][i]['name']+' ('+data['pl'][i]['id']+'):\')" onmouseout="nd()"></div>';
 					}
 				}
 			}

@@ -174,7 +174,7 @@ oddbtool.parsePage = function(page, manual) {
 						pl[i]['id'] = $(this).find('tr:nth-child(1) img').attr('id').replace(/x/, '');
 						
 						// Typ
-						pl[i]['typ'] = $(this).find('tr:first-child > td').css('background-image').replace(/^.*planet(\d+)_s.*$/, '$1');
+						pl[i]['typ'] = $(this).find('tr:nth-child(1) > td').css('background-image').replace(/^.*planet(\d+)_s.*$/, '$1');
 					}
 					catch(e) {
 						throw 'Konnte ID und Typ nicht ermitteln ('+i+')';
@@ -254,7 +254,7 @@ oddbtool.parsePage = function(page, manual) {
 						pl[i]['id'] = $(this).find('tr:nth-child(2) img').attr('id').replace(/x/, '');
 						
 						// Typ
-						pl[i]['typ'] = $(this).find('tr:first-child > td').css('background-image').replace(/^.*planet(\d+)_s.*$/, '$1');
+						pl[i]['typ'] = $(this).find('tr:nth-child(2) > td').css('background-image').replace(/^.*planet(\d+)_s.*$/, '$1');
 					}
 					catch(e) {
 						throw 'Konnte ID und Typ nicht ermitteln ('+i+')';
