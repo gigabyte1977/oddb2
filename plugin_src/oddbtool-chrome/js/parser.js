@@ -139,8 +139,9 @@ oddbtool.parsePage = function(page, manual) {
 		//
 		// Unbekanntes System
 		//
-		if(ctree.find('td > a[onmouseover*="setter(\'\',\'\',\' \',\' \',\'\')"]').length) {
-			out['typ'] = 'sysun';
+		//if(ctree.find('td > a[onmouseover*="setter(\'\',\'\',\' \',\' \',\'\')"]').length) {
+        if(ctree.find('font[color=#FF0000]:contains("Das System wurde von uns noch nicht besucht.")').length) {			
+        	out['typ'] = 'sysun';
 			
 			// Einscanner-Ally ermitteln
 			if(tree.find('.statusbar a.alliance').length) {
@@ -221,6 +222,126 @@ oddbtool.parsePage = function(page, manual) {
 			// ans Ausgabe-Objekt hängen
 			out['pl'] = pl;
 		}
+        
+        
+        //
+        // System ohne Einsicht aber in Interner DB
+        //
+        else if(ctree.find('font[color=#FFFF00]:contains("kein Einblick")').length) {       	
+            out['typ'] = 'sysun';
+            
+            // Einscanner-Ally ermitteln
+            if(tree.find('.statusbar a.alliance').length) {
+                out['scannerally'] = tree.find('.statusbar a.alliance').attr('href').replace(/[^\d]/g, '');
+            }
+            
+            // ID und Name
+            try {
+                out['id'] = ctree.find('#sysid > input').val();
+                out['name'] = ctree.find('#sysid').prev('strong').html().replace(/&nbsp;/g, '');
+            }
+            catch(e) {
+                throw 'Konnte Name und ID nicht ermitteln!';
+            }
+            
+            // Planetendaten
+            var pl = [];
+            var data;
+            
+            if(ctree.find('table[style="margin: auto;"] td[valign="top"] > table').length != 7) {
+                throw 'Konnte nicht alle Planeten ermitteln!';
+            }
+            
+            ctree.find('table[style="margin: auto;"] td[valign="top"] > table').each(function(i) {
+                // Planet vorhanden
+                if($(this).find('td').length) {
+                    pl[i] = {};
+                    
+                    try {
+                        // ID
+                        pl[i]['id'] = $(this).find('tr:nth-child(2) img').attr('id').replace(/x/, '');
+                        
+                        // Typ
+                        pl[i]['typ'] = $(this).find('tr:nth-child(2) > td').css('background-image').replace(/^.*planet(\d+)_s.*$/, '$1');
+                    }
+                    catch(e) {
+                        throw 'Konnte ID und Typ nicht ermitteln ('+i+')';
+                    }
+                    
+					// Name und Werte
+					try {
+						data = $(this).find('tr:nth-child(2) a').attr('onmouseover');
+						pl[i]['name'] = data.match(/\'([^\']*):\'\);setter\(/)[1]; 
+						
+						data = data.replace(/','.*$/, '');
+						data = data.split('<br>');
+						
+						// Workaround: Unbewohnbare Planis Größe und Bevölkerung 0
+						if(data.length == 6) {
+							pl[i]['groesse'] = 0;
+							pl[i]['bev'] = 0;
+						}
+						else {
+							pl[i]['bev'] = data[4].replace(/[^\d+]/g, '');
+							
+							var groesse = data[6].match(/e: (\d+)\',/);
+							
+							if(groesse) {
+								pl[i]['groesse'] = groesse[1];
+							}
+							else {
+								throw 'Konnte Größe nicht ermitteln ('+i+')';
+							}
+						}
+						
+						
+						data = $(data[3]);
+						pl[i]['erz'] = data.find('tr:nth-child(2) > td:nth-child(2)').html().replace(/[^\d+]/g, '');
+						pl[i]['wolfram'] = data.find('tr:nth-child(4) > td:nth-child(2)').html().replace(/[^\d+]/g, '');
+						pl[i]['kristall'] = data.find('tr:nth-child(5) > td:nth-child(2)').html().replace(/[^\d+]/g, '');
+						pl[i]['fluor'] = data.find('tr:nth-child(6) > td:nth-child(2)').html().replace(/[^\d+]/g, '');
+					}
+					
+                    /* Name und Werte
+                    try {
+                        data = $(this).find('tr:nth-child(2) a').attr('onmouseover');
+                        //pl[i]['name'] = data.replace(/^.*\'<b>(.*)<\/b>:\'\);setter.*$/, '$1');
+                        pl[i]['name'] = data.match(/\'([^\']*):\'\);setter\(/)[1];
+                        
+                        // kein Genesis -> Werte
+                        if(data.indexOf('!&lt;\/b&gt;&lt;\/center&gt;') == -1 && data.indexOf('demateriali') == -1) {
+                            data = data.replace(/','.*$/, '');
+                            data = data.replace(/http:\/\/[a-zA-Z0-9]*\.*omega/g, '');
+                            data = data.split('<br>');
+
+                            pl[i]['erz'] = data[4].replace(/[^\d+]/g, '');
+                            pl[i]['wolfram'] = data[5].replace(/[^\d+]/g, '');
+                            pl[i]['kristall'] = data[6].replace(/[^\d+]/g, '');
+                            pl[i]['fluor'] = data[7].replace(/[^\d+]/g, '');
+                            pl[i]['bev'] = data[9].replace(/[^\d+]/g, '');
+                            pl[i]['groesse'] = data[11].replace(/[^\d+]/g, '');
+
+                            // Workaround: Unbewohnbare Planis Größe 0
+                            if(pl[i]['groesse'] == '' || pl[i]['groesse'] == '0000') {
+                                pl[i]['groesse'] = 0;
+                            }
+                        }
+                    } */
+                    
+                    catch(e) {
+                        throw 'Konnte Planetenwerte nicht ermitteln ('+i+')';
+                    }
+                    
+                }
+                // Kein Planet vorhanden
+                else {
+                    pl[i] = '';
+                }
+            });
+            
+            // ans Ausgabe-Objekt hängen
+            out['pl'] = pl;
+        }
 		//
 		// Bekanntes System
 		//
@@ -656,6 +777,14 @@ oddbtool.parsePage = function(page, manual) {
 				out['pl'].push(pl);
 			});
 		}
+		//
+		// Orbit aber keine Einsicht
+		//
+		else if(ctree.find('b:contains("Dieser Orbit kann nicht eingesehen werden")').length) {
+			r.append('<span style="color:green">Orbit kann nicht gescannt werden, keine Einträge in DB...</span>');
+
+			return false; // nicht weiter - keine Daten an DB
+		} 
 		//
 		// Orbit
 		//

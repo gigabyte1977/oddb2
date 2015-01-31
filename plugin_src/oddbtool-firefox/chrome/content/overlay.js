@@ -7,7 +7,7 @@ var oddbtool = {
 	/**
 	 * Version
 	 */
-	version: '2.5.0.4',
+	version: '2.5.0.6',
 	odworld: 'int13',
 	
 	
@@ -466,8 +466,8 @@ var oddbtool = {
         '.oddbtoolplanet {display:none}',
         '.oddbtoolorbit {display: block}',
         '.layout-footer {margin-top:100px;}',
-        '.oddbtoolpfeil {margin-top:50px;}',
-        '.oddbtoolmenu {margin-top:50px;}'
+        '.oddbtoolpfeil {margin-top:65px;}',
+        '.oddbtoolmenu {margin-top:65px;}'
 		].join('');
 		
 		
