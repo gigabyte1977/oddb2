@@ -57,7 +57,7 @@ else if($_GET['sp'] == 'send') {
 	if(!$user->rechte['toxxraid']) $tmpl->error = 'Du hast keine Berechtigung!';
 	// Daten unvollständig
 	else if(!isset($_POST['start'], $_POST['count'], $_POST['antrieb'], $_POST['player'], $_POST['ally'], $_POST['status'], $_POST['kategorie'], $_POST['sektor'])) {
-		$tmpl->error = 'Daten unvollständig!';
+		$tmpl->error = 'Daten unvollstaendig!';
 	}
 	// Antrieb ungültig
 	else if((int)$_POST['antrieb'] < 1) {
@@ -309,7 +309,7 @@ else if($_GET['sp'] == 'send') {
 				$t = time();
 				$ids = array();
 				$sids = array();
-				
+				               
 				// Planeten abfragen
 				$query = query("
 					SELECT
@@ -367,7 +367,7 @@ else if($_GET['sp'] == 'send') {
 					ORDER BY
 						planetenEntfernung ASC
 					LIMIT ".$_POST['count']."
-				") OR die("Fehler in ".__FILE__." Zeile ".__LINE__.": ".mysql_error());
+				") OR die("Fehler in ".__FILE__." Zeile ".__LINE__.": ".mysql_error().$ttt);
 				
 				if(mysql_num_rows($query)) {
 					$intoxxroute = false;

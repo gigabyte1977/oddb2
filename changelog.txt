@@ -1,4 +1,9 @@
-﻿30.09.2014 - V2.4.0.3
+30.09.2014 - V2.4.1.0
+---------------------
+* Scan für Allianz- und User-Highscore über neue Pluginfunktionalität
+
+
+30.09.2014 - V2.4.0.3
 ---------------------
 * Fix der Systemansicht nach dem OD-Update
 * Empfehlung für PHP-Variable max_input_vars auf mindestens 10000 erhöht

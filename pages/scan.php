@@ -464,6 +464,14 @@ else if($_GET['sp'] == 'scan') {
 			include './pages/scan/forschung.php';
 			ScanForschung::scan();
 		}
+        // User Highscore
+        else if($_POST['typ'] == 'user_highscore') {
+            include './pages/scan/user_highscore.php';
+        } 
+        // Alli Highscore
+        else if($_POST['typ'] == 'alli_highscore') {
+            include './pages/scan/alli_highscore.php';
+        } 
 		// unbekannter Typ
 		else {
 			$tmpl->error = 'Unbekannter Scan-Typ!';
