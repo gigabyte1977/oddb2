@@ -1,9 +1,9 @@
 {
   "name": "ODDB Tool",
-  "version": "2.5.0.6",
+  "version": "2.6.0.0",
   "manifest_version": 2,
   "description": "Das Chrome-Addon für die ODDB V2",
-  "homepage_url": "http://www.kryops.de",
+  "homepage_url": "https://github.com/gigabyte1977/oddb2",
   "minimum_chrome_version": "18",
   "icons": {
 	"48": "img/icon48.png",
@@ -31,7 +31,16 @@
 			"*://www3.omega-day.de/game/*",
 			"*://omega-day.de/game/*",
 			"*://www.omegaday.de/game/*",
-			"*://omegaday.de/game/*"
+			"*://omegaday.de/game/*",
+            "*://www.omega-day.com/highscore_*",
+            "*://omega-day.com/highscore_*",
+            "*://www.omega-day.de/highscore_*",
+            "*://www3.omega-day.de/highscore_*",
+            "*://omega-day.de/highscore_*",
+            "*://www.omegaday.de/highscore_*",
+            "*://omegaday.de/highscore_*"            
+
+
 		],
 		"css": ["css/content.css"],
 		"js": [

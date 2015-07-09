@@ -3,8 +3,8 @@ var oddbtool = {
 	/**
 	 * Version
 	 */
-	version: '2.5.0.6',
-	odworld: 'int13',
+	version: '2.6.0.0',
+	odworld: 'int14',
 	
 	
 	/**
@@ -237,7 +237,9 @@ var oddbtool = {
 		floview: /\?op=fleet&tab=5$/,
 		floviewbbs: /\?op=fleet&tab=2$/,
 		toxx: /\?op=orbit&index=\d+&bioatack=1$/,
-		forschung: /\?op=tech(&tree=(geb|raum|sys))?$/
+		forschung: /\?op=tech(&tree=(geb|raum|sys))?$/,
+        user_highscore: /highscore_users/,
+        alli_highscore: /highscore_alliances/        
 	},
 	
 	/**

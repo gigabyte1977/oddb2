@@ -7,8 +7,8 @@ var oddbtool = {
 	/**
 	 * Version
 	 */
-	version: '2.5.0.6',
-	odworld: 'int13',
+	version: '2.6.0.0',
+	odworld: 'int14',
 	
 	
 	jqueryload: false,
@@ -160,7 +160,9 @@ var oddbtool = {
 			auto_sitter: prefManager.getBoolPref('extensions.oddbtool.auto_sitter'),
 			auto_einst: prefManager.getBoolPref('extensions.oddbtool.auto_einst'),
 			auto_toxx: prefManager.getBoolPref('extensions.oddbtool.auto_toxx'),
-			auto_forschung: prefManager.getBoolPref('extensions.oddbtool.auto_forschung')
+			auto_forschung: prefManager.getBoolPref('extensions.oddbtool.auto_forschung'),
+            auto_user_highscore: prefManager.getBoolPref('extensions.oddbtool.auto_user_highscore'),
+            auto_alli_highscore: prefManager.getBoolPref('extensions.oddbtool.auto_alli_highscore')
 		}
 	},
 	
@@ -273,7 +275,8 @@ var oddbtool = {
 	 */
 	isODPage: function(url) {
 		var url = url.toString();
-		if(url.indexOf('omega-day.com/game/') != -1 || url.indexOf('omega-day.de/game/') != -1 || url.indexOf('omegaday.de/game/') != -1) {
+		if(url.indexOf('omega-day.com/game/') != -1 || url.indexOf('omega-day.de/game/') != -1 || url.indexOf('omegaday.de/game/') != -1 ||
+           url.indexOf('omega-day.com/highscore') != -1 || url.indexOf('omega-day.com/highscore') != -1  || url.indexOf('omegaday.de/highscore') != -1) {
 			// Betaserver ausschließen
 			if(!oddbtool.betaserver && (url.indexOf('beta.o') != -1 || url.indexOf('pre.o') != -1 || url.indexOf('beta2.o') != -1)) {
 				return false;
@@ -301,7 +304,9 @@ var oddbtool = {
 		floview: /\?op=fleet&tab=5$/,
 		floviewbbs: /\?op=fleet&tab=2$/,
 		toxx: /\?op=orbit&index=\d+&bioatack=1$/,
-		forschung: /\?op=tech(&tree=(geb|raum|sys))?$/
+		forschung: /\?op=tech(&tree=(geb|raum|sys))?$/,
+        user_highscore: /highscore_users/,
+        alli_highscore: /highscore_alliances/          
 	},
 	
 	/**
@@ -427,7 +432,7 @@ var oddbtool = {
 		
 		'#oddbtoolheadline{position:absolute; top:85px; left:50%; margin-left:-235px; width:650px; text-align:center;}',
 		
-		'#oddbtoolfowtbl{position:absolute; top:850px; left:50%; margin-left:-300px; width:700px; background-color:rgba(255,255,255,0.15); padding:10px; -moz-border-radius:12px; border-radius:12px; font-family:Arial,Sans; font-size:12px; color:white; z-index:1;}',
+		'#oddbtoolfowtbl{position:absolute; top:1050px; left:50%; margin-left:-300px; width:700px; background-color:rgba(255,255,255,0.15); padding:10px; -moz-border-radius:12px; border-radius:12px; font-family:Arial,Sans; font-size:12px; color:white; z-index:1;}',
 		'#oddbtoolfowtbl table{width:100%}',
 		'#oddbtoolfowtbl th, #oddbtoolfowtbl td, #oddbtoolfowtbl a {font-size:9pt;padding:5px}',
 		'#oddbtoolfowtbl th{background-color:rgba(255,255,255,0.1); text-align:left; font-weight:bold;}',
@@ -465,7 +470,7 @@ var oddbtool = {
         '/* Temp Anpassungen R13   */',
         '.oddbtoolplanet {display:none}',
         '.oddbtoolorbit {display: block}',
-        '.layout-footer {margin-top:100px;}',
+        '.layout-footer {margin-top:300px;}',
         '.oddbtoolpfeil {margin-top:65px;}',
         '.oddbtoolmenu {margin-top:65px;}'
 		].join('');
@@ -500,14 +505,11 @@ var oddbtool = {
 		
 		// Autoparser
 		for(var i in oddbtool.parserRegex) {
-		
 			if(oddbtool.parserRegex[i].exec(url) != null) {
-				
 				// Bergbauschiffe auf Flottenübersich mappen
 				if(i == 'floviewbbs') {
 					i = 'floview';
 				}
-				
 				if(typeof(oddbtool.prefs["auto_"+i]) != 'undefined' && oddbtool.prefs["auto_"+i]) {
 					window.setTimeout(
 						function() {
