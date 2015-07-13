@@ -90,7 +90,7 @@ $content .= '
 <div class="hl2">Spieler mit Registrierungserlaubnis</div>
 <div class="icontent">
 	<div class="fcbox center" style="width:500px">
-		<form name="register_player" onsubmit="return form_send(this, \'index.php?p=admin&amp;sp=register_addplayer&amp;ajax\', $(this).siblings(\'.ajax\'))">
+		<form action="#" name="register_player" onsubmit="return form_send(this, \'index.php?p=admin&amp;sp=register_addplayer&amp;ajax\', $(this).siblings(\'.ajax\'))">
 		Den Spieler mit der ID 
 		&nbsp;<input type="text" class="smalltext" name="id" />&nbsp; 
 		<input type="submit" class="button" style="width:80px" value="hinzuf&uuml;gen" />

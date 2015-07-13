@@ -41,6 +41,12 @@ else if($_GET['sp'] == 'add_send') {
 		
 		$admin = (int)$_POST['admin'];
 		unset($_POST['admin']);
+        
+        $admin_alli = (int)$_POST['admin_alli'];
+        unset($_POST['admin_alli']);        
+        
+        $admin_name = $_POST['admin_name'];
+        unset($_POST['admin_name']);
 		
 		if(isset($_POST['data_copy'])) {
 			$data_copy = (int)$_POST['data_copy'];
@@ -128,8 +134,8 @@ else if($_GET['sp'] == 'add_send') {
 			$mysql_use = false;
 		}
 		
-		// Vorhandensein des Administrators
-		$file = 'http://www.omega-day.com/game/states/live_state.php?userid='.$admin.'&world='.ODWORLD;
+		// Vorhandensein des Administrators  -- gibt es nicht mehr !!!
+		/* $file = 'http://www.omega-day.com/game/states/live_state.php?userid='.$admin.'&world='.ODWORLD;
 		$connection = @fopen($file,'r');
 		if(!$connection) {
 			$tmpl->error = 'Konnte keine Verbindung zum OD-Server aufbauen!';
@@ -145,7 +151,7 @@ else if($_GET['sp'] == 'add_send') {
 			if(!isset($oddata['name']) OR $oddata['name'] == '') {
 				$tmpl->error = 'Der Account mit der User-ID '.$admin.' ist nicht vorhanden oder hat sich gel&ouml;scht!';
 			}
-		}
+		}  */
 		
 		// Tabellen erzeugen
 		if(!$mysql_use AND !$tmpl->error) {
@@ -330,7 +336,14 @@ else if($_GET['sp'] == 'add_send') {
 		
 		if(!$tmpl->error) {
 			// Administrator-Account anlegen
-			odrequest($admin, true);
+			//odrequest($admin, true);  // TO DO !!!! geht nicht mehr !! Player muss in Player angelegt werden manuell
+            $query = query("
+                INSERT INTO ".GLOBPREFIX."player
+                    (playerID, playerName, player_allianzenID)
+                    VALUES (".$admin.", '".$admin_name."',".$admin_alli.")");
+            if(!$query) {
+                //$tmpl->error = 'Fehler beim Anlegen des Administrator-Accounts! (Anlegen als Player) '.mysql_error().'<br />';
+            }
 			
 			// Passwort erzeugen
 			$v = array("a", "e", "i", "o", "u");
@@ -351,7 +364,7 @@ else if($_GET['sp'] == 'add_send') {
 					register_playerID = ".$admin."
 			");
 			if(!$query) {
-				$tmpl->error = 'Fehler beim Anlegen des Administrator-Accounts! '.mysql_error().'<br />';
+				$tmpl->error = 'Fehler beim Anlegen des Administrator-Accounts!1 '.mysql_error().'<br />';
 			}
 			
 			$query = query("
@@ -364,7 +377,7 @@ else if($_GET['sp'] == 'add_send') {
 					playerID = ".$admin."
 			");
 			if(!$query OR !mysql_num_rows($query)) {
-				$tmpl->error = 'Fehler beim Anlegen des Administrator-Accounts!<br />';
+				$tmpl->error = 'Fehler beim Anlegen des Administrator-Accounts!2<br />'.$query;
 			}
 			else {
 				$data = mysql_fetch_assoc($query);
@@ -387,7 +400,7 @@ else if($_GET['sp'] == 'add_send') {
 						userApiKey = '".General::generateApiKey()."'
 				");
 				if(!$query) {
-					$tmpl->error = 'Fehler beim Anlegen des Administrator-Accounts! '.mysql_error().'<br />';
+					$tmpl->error = 'Fehler beim Anlegen des Administrator-Accounts!3 '.mysql_error().'<br />';
 				}
 				else {
 					// Fenster mit Passwort öffnen
@@ -406,7 +419,7 @@ else if($_GET['sp'] == 'add_send') {
 						register_allianzenID = ".$allianz."
 				");
 				if(!$query) {
-					$tmpl->error = 'Fehler beim Anlegen des Administrator-Accounts! '.mysql_error().'<br />';
+					$tmpl->error = 'Fehler beim Anlegen des Administrator-Accounts!4 '.mysql_error().'<br />';
 				}
 			}
 			
@@ -561,9 +574,17 @@ else if($_GET['sp'] == 'add') {
 		<th colspan="2">Administrator und Registrier-Erlaubnis</th>
 	</tr>
 	<tr>
-		<td>User-ID</td>
+		<td>User-ID (identisch mit OD!!!)</td>
 		<td><input type="text" class="text tooltip" name="admin" tooltip="Die OD-User-ID des Spielers, der die Instanz administrieren soll" /></td>
 	</tr>
+    <tr>
+        <td>User-Name (identisch mit OD!!!)</td>
+        <td><input type="text" class="text tooltip" name="admin_name" tooltip="Der OD-Name des Spielers, der die Instanz administrieren soll" /></td>
+    </tr>  
+    <tr>
+        <td>User-Allianz (identisch mit aktueller in OD!!!)</td>
+        <td><input type="text" class="text tooltip" name="admin_alli" tooltip="Die Allianz OD-Name des Spielers, der die Instanz administrieren soll" /></td>
+    </tr>        
 	<tr>
 		<td colspan="2">&nbsp;</td>
 	</tr>	

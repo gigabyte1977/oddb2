@@ -284,13 +284,14 @@ oddbtool.parsePage = function(page, manual) {
 						else {
 							pl[i]['bev'] = data[4].replace(/[^\d+]/g, '');
 							
-							var groesse = data[6].match(/e: (\d+)\',/);
-							
+							var groesse = data[6].match(/(\d+)/);
+						
 							if(groesse) {
 								pl[i]['groesse'] = groesse[1];
 							}
 							else {
-								throw 'Konnte Größe nicht ermitteln ('+i+')';
+								pl[i]['groesse'] = 0;
+								//throw 'Konnte Größe nicht ermitteln ('+i+')';
 							}
 						}
 						
@@ -396,14 +397,16 @@ oddbtool.parsePage = function(page, manual) {
 						}
 						else {
 							pl[i]['bev'] = data[4].replace(/[^\d+]/g, '');
+							if (pl[i]['bev'] == "") { pl[i]['bev'] = 0; }
 							
-							var groesse = data[6].match(/e: (\d+)\',/);
+							var groesse = data[6].match(/(\d+)/);
 							
 							if(groesse) {
 								pl[i]['groesse'] = groesse[1];
 							}
 							else {
-								throw 'Konnte Größe nicht ermitteln ('+i+')';
+								pl[i]['groesse'] = 0;
+								//throw 'Konnte Größe nicht ermitteln ('+i+')';
 							}
 						}
 						
@@ -1165,6 +1168,62 @@ oddbtool.parsePage = function(page, manual) {
 				out['current_end'] = ctree.find('#returntim').siblings('b').html();
 			}
 		}
+        //
+        // User Highscore
+        //
+        else if(ctree.find('.header:contains("Rangliste: Gesamtpunkte")').length &&
+                ctree.find('.item:contains("Imperiumspunkte")').length){
+            
+            out['typ'] = 'user_highscore';
+            
+            out['userdata'] = [];
+            var user;
+            
+            ctree.find('tr').each(function(index) {
+            try {
+                if (index > 0 && !$(this).find('.filterlabel').length) {
+                    user = {};
+						console.log(index);
+						user['id'] = $(this).find('a').attr('href').replace(/[^\d]/g, '');
+						user['pname'] = $(this).find('td:nth-child(2) a').html()
+						user['rasse'] = $(this).find('td:nth-child(3) a').attr('href').replace(/[^\d]/g, '').substr(1);
+						user['alli'] = $(this).find('td:nth-child(4) a').attr('href').replace(/[^\d]/g, '');
+						user['punkte'] = $(this).find('td:nth-child(5)').html().replace('.', '')
+						out['userdata'].push(user);
+                }
+            }
+            catch(e) {
+                throw 'Fehler beim Einscannen der User Highscore!'+e;
+            }
+            });
+        }
+        //
+        // Allianz Highscore
+        //
+        else if(ctree.find('.header:contains("Rangliste: Gesamtpunkte")').length){
+            
+            out['typ'] = 'alli_highscore';
+                          
+            out['allidata'] = [];
+            var alli;
+            
+            ctree.find('tr').each(function(index) {
+            try {
+                if (index > 0 && !$(this).find('.filterlabel').length) {
+                    alli = {};
+                        console.log(index);
+                        alli['id'] = $(this).find('td:nth-child(2) a').attr('href').replace(/[^\d]/g, '');
+                        alli['atag'] = $(this).find('td:nth-child(2) a').html()
+                        alli['aname'] = $(this).find('td:nth-child(3) a').html()
+                        alli['mitglieder'] = $(this).find('td:nth-child(4)').html()
+                        out['allidata'].push(alli);
+                }
+            }
+            catch(e) {
+                throw 'Fehler beim Einscannen der Allianz Highscore!'+e;
+            }
+            });
+        }        
 		//
 		// Unbekannter Quelltext
 		//

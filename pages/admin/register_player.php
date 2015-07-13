@@ -20,7 +20,7 @@ if($_GET['sp'] == 'register_addplayer') {
 	// alles OK
 	else {
 		// Daten sichern
-		$_POST['id'] = (int)$_POST['id'];
+		//$_POST['id'] = (int)$_POST['id'];
 		
 		// ID ungültig
 		if($_POST['id'] < 1) {

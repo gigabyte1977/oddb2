@@ -1,6 +1,6 @@
 {
   "name": "ODDB Tool",
-  "version": "2.6.0.0",
+  "version": "2.6.0.1",
   "manifest_version": 2,
   "description": "Das Chrome-Addon für die ODDB V2",
   "homepage_url": "https://github.com/gigabyte1977/oddb2",

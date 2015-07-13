@@ -30,9 +30,9 @@ define('DOWNTIME', false);
 define('ABGLEICH_VERSION', 4);
 define('GRUNDDATEN_VERSION', 1);
 // ODDB Tool-Version
-define('ODDBTOOL', '2.6.0.0');
-define('ODDBTOOLPATH', 'oddbtool-2_6_0_6.xpi');
-define('ODDBTOOLPATH_CHROME', 'oddbtool-chrome-2_6_0_0.zip');
+define('ODDBTOOL', '2.6.0.1');
+define('ODDBTOOLPATH', 'oddbtool-2_6_0_1.xpi');
+define('ODDBTOOLPATH_CHROME', 'oddbtool-chrome-2_6_0_1.zip');
 
 // Debug-Modus
 define('DEBUG', false);
